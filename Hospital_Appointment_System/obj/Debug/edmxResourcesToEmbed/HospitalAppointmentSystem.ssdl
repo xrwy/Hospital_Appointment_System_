@@ -1,0 +1,196 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="HospitalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Authorities">
+    <Key>
+      <PropertyRef Name="Authorized_ID" />
+    </Key>
+    <Property Name="Authorized_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Authorized_Name" Type="varchar" MaxLength="15" />
+    <Property Name="Authorized_Password" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="Date">
+    <Key>
+      <PropertyRef Name="Date_ID" />
+    </Key>
+    <Property Name="Date_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Appointment_Date" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Doctor">
+    <Key>
+      <PropertyRef Name="Doctor_ID" />
+    </Key>
+    <Property Name="Doctor_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Doctor_Name" Type="varchar" MaxLength="25" />
+    <Property Name="Doctor_Lastname" Type="varchar" MaxLength="25" />
+  </EntityType>
+  <EntityType Name="Hour">
+    <Key>
+      <PropertyRef Name="Hour_ID" />
+    </Key>
+    <Property Name="Hour_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Appointment_Time" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Meeting">
+    <Key>
+      <PropertyRef Name="Meeting_ID" />
+    </Key>
+    <Property Name="Meeting_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Policlinic_ID" Type="int" />
+    <Property Name="Patient_ID" Type="int" />
+    <Property Name="Doctor_ID" Type="int" />
+    <Property Name="Hour_ID" Type="int" />
+    <Property Name="Date_ID" Type="int" />
+  </EntityType>
+  <EntityType Name="Member">
+    <Key>
+      <PropertyRef Name="Member_No" />
+    </Key>
+    <Property Name="Member_No" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Member_Identity" Type="varchar" MaxLength="11" />
+    <Property Name="Member_Name" Type="varchar" MaxLength="20" />
+    <Property Name="Member_Lastname" Type="varchar" MaxLength="20" />
+    <Property Name="Member_Gender" Type="varchar" MaxLength="15" />
+    <Property Name="Member_Date_of_birth" Type="varchar" MaxLength="20" />
+    <Property Name="Member_Password" Type="varchar" MaxLength="15" />
+  </EntityType>
+  <EntityType Name="Patient">
+    <Key>
+      <PropertyRef Name="Patient_ID" />
+    </Key>
+    <Property Name="Patient_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Patient_Identity" Type="varchar" MaxLength="11" />
+    <Property Name="Patient_Name" Type="varchar" MaxLength="30" />
+    <Property Name="Patient_Lastname" Type="varchar" MaxLength="30" />
+    <Property Name="Patient_Date_of_birth" Type="varchar" MaxLength="30" />
+    <Property Name="Patient_Gender" Type="varchar" MaxLength="15" />
+  </EntityType>
+  <EntityType Name="Policlinic">
+    <Key>
+      <PropertyRef Name="Policlinic_ID" />
+    </Key>
+    <Property Name="Policlinic_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Policlinic_City" Type="varchar" MaxLength="60" />
+    <Property Name="Policlinic_District" Type="varchar" MaxLength="100" />
+    <Property Name="Policlinic_Hospital" Type="varchar" MaxLength="100" />
+    <Property Name="Policlinic_Name" Type="varchar" MaxLength="100" />
+    <Property Name="Policlinic_Place" Type="varchar" MaxLength="100" />
+    <Property Name="Doctor_ID" Type="int" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <Association Name="FK_Poliklinik_Doktor">
+    <End Role="Doctor" Type="Self.Doctor" Multiplicity="0..1" />
+    <End Role="Policlinic" Type="Self.Policlinic" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Doctor">
+        <PropertyRef Name="Doctor_ID" />
+      </Principal>
+      <Dependent Role="Policlinic">
+        <PropertyRef Name="Doctor_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Randevu_Doktor">
+    <End Role="Doctor" Type="Self.Doctor" Multiplicity="0..1" />
+    <End Role="Meeting" Type="Self.Meeting" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Doctor">
+        <PropertyRef Name="Doctor_ID" />
+      </Principal>
+      <Dependent Role="Meeting">
+        <PropertyRef Name="Doctor_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Randevu_Hasta">
+    <End Role="Patient" Type="Self.Patient" Multiplicity="0..1" />
+    <End Role="Meeting" Type="Self.Meeting" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Patient">
+        <PropertyRef Name="Patient_ID" />
+      </Principal>
+      <Dependent Role="Meeting">
+        <PropertyRef Name="Patient_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Randevu_Poliklinik">
+    <End Role="Policlinic" Type="Self.Policlinic" Multiplicity="0..1" />
+    <End Role="Meeting" Type="Self.Meeting" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Policlinic">
+        <PropertyRef Name="Policlinic_ID" />
+      </Principal>
+      <Dependent Role="Meeting">
+        <PropertyRef Name="Policlinic_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Randevu_Saat">
+    <End Role="Hour" Type="Self.Hour" Multiplicity="0..1" />
+    <End Role="Meeting" Type="Self.Meeting" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Hour">
+        <PropertyRef Name="Hour_ID" />
+      </Principal>
+      <Dependent Role="Meeting">
+        <PropertyRef Name="Hour_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Randevu_Tarih">
+    <End Role="Date" Type="Self.Date" Multiplicity="0..1" />
+    <End Role="Meeting" Type="Self.Meeting" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Date">
+        <PropertyRef Name="Date_ID" />
+      </Principal>
+      <Dependent Role="Meeting">
+        <PropertyRef Name="Date_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="HospitalModelStoreContainer">
+    <EntitySet Name="Authorities" EntityType="Self.Authorities" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Date" EntityType="Self.Date" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Doctor" EntityType="Self.Doctor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Hour" EntityType="Self.Hour" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Meeting" EntityType="Self.Meeting" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Member" EntityType="Self.Member" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Patient" EntityType="Self.Patient" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Policlinic" EntityType="Self.Policlinic" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Poliklinik_Doktor" Association="Self.FK_Poliklinik_Doktor">
+      <End Role="Doctor" EntitySet="Doctor" />
+      <End Role="Policlinic" EntitySet="Policlinic" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Randevu_Doktor" Association="Self.FK_Randevu_Doktor">
+      <End Role="Doctor" EntitySet="Doctor" />
+      <End Role="Meeting" EntitySet="Meeting" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Randevu_Hasta" Association="Self.FK_Randevu_Hasta">
+      <End Role="Patient" EntitySet="Patient" />
+      <End Role="Meeting" EntitySet="Meeting" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Randevu_Poliklinik" Association="Self.FK_Randevu_Poliklinik">
+      <End Role="Policlinic" EntitySet="Policlinic" />
+      <End Role="Meeting" EntitySet="Meeting" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Randevu_Saat" Association="Self.FK_Randevu_Saat">
+      <End Role="Hour" EntitySet="Hour" />
+      <End Role="Meeting" EntitySet="Meeting" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Randevu_Tarih" Association="Self.FK_Randevu_Tarih">
+      <End Role="Date" EntitySet="Date" />
+      <End Role="Meeting" EntitySet="Meeting" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

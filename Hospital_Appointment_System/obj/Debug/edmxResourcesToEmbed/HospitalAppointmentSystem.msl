@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="HospitalModelStoreContainer" CdmEntityContainer="HospitalEntities">
+    <EntitySetMapping Name="Authorities">
+      <EntityTypeMapping TypeName="HospitalModel.Authority">
+        <MappingFragment StoreEntitySet="Authorities">
+          <ScalarProperty Name="Authorized_ID" ColumnName="Authorized_ID" />
+          <ScalarProperty Name="Authorized_Name" ColumnName="Authorized_Name" />
+          <ScalarProperty Name="Authorized_Password" ColumnName="Authorized_Password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Dates">
+      <EntityTypeMapping TypeName="HospitalModel.Date">
+        <MappingFragment StoreEntitySet="Date">
+          <ScalarProperty Name="Date_ID" ColumnName="Date_ID" />
+          <ScalarProperty Name="Appointment_Date" ColumnName="Appointment_Date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Doctors">
+      <EntityTypeMapping TypeName="HospitalModel.Doctor">
+        <MappingFragment StoreEntitySet="Doctor">
+          <ScalarProperty Name="Doctor_Lastname" ColumnName="Doctor_Lastname" />
+          <ScalarProperty Name="Doctor_Name" ColumnName="Doctor_Name" />
+          <ScalarProperty Name="Doctor_ID" ColumnName="Doctor_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Hours">
+      <EntityTypeMapping TypeName="HospitalModel.Hour">
+        <MappingFragment StoreEntitySet="Hour">
+          <ScalarProperty Name="Hour_ID" ColumnName="Hour_ID" />
+          <ScalarProperty Name="Appointment_Time" ColumnName="Appointment_Time" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Meetings">
+      <EntityTypeMapping TypeName="HospitalModel.Meeting">
+        <MappingFragment StoreEntitySet="Meeting">
+          <ScalarProperty Name="Meeting_ID" ColumnName="Meeting_ID" />
+          <ScalarProperty Name="Policlinic_ID" ColumnName="Policlinic_ID" />
+          <ScalarProperty Name="Patient_ID" ColumnName="Patient_ID" />
+          <ScalarProperty Name="Doctor_ID" ColumnName="Doctor_ID" />
+          <ScalarProperty Name="Hour_ID" ColumnName="Hour_ID" />
+          <ScalarProperty Name="Date_ID" ColumnName="Date_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Members">
+      <EntityTypeMapping TypeName="HospitalModel.Member">
+        <MappingFragment StoreEntitySet="Member">
+          <ScalarProperty Name="Member_No" ColumnName="Member_No" />
+          <ScalarProperty Name="Member_Identity" ColumnName="Member_Identity" />
+          <ScalarProperty Name="Member_Name" ColumnName="Member_Name" />
+          <ScalarProperty Name="Member_Lastname" ColumnName="Member_Lastname" />
+          <ScalarProperty Name="Member_Gender" ColumnName="Member_Gender" />
+          <ScalarProperty Name="Member_Date_of_birth" ColumnName="Member_Date_of_birth" />
+          <ScalarProperty Name="Member_Password" ColumnName="Member_Password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Patients">
+      <EntityTypeMapping TypeName="HospitalModel.Patient">
+        <MappingFragment StoreEntitySet="Patient">
+          <ScalarProperty Name="Patient_ID" ColumnName="Patient_ID" />
+          <ScalarProperty Name="Patient_Identity" ColumnName="Patient_Identity" />
+          <ScalarProperty Name="Patient_Name" ColumnName="Patient_Name" />
+          <ScalarProperty Name="Patient_Lastname" ColumnName="Patient_Lastname" />
+          <ScalarProperty Name="Patient_Date_of_birth" ColumnName="Patient_Date_of_birth" />
+          <ScalarProperty Name="Patient_Gender" ColumnName="Patient_Gender" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Policlinics">
+      <EntityTypeMapping TypeName="HospitalModel.Policlinic">
+        <MappingFragment StoreEntitySet="Policlinic">
+          <ScalarProperty Name="Policlinic_ID" ColumnName="Policlinic_ID" />
+          <ScalarProperty Name="Policlinic_City" ColumnName="Policlinic_City" />
+          <ScalarProperty Name="Policlinic_District" ColumnName="Policlinic_District" />
+          <ScalarProperty Name="Policlinic_Hospital" ColumnName="Policlinic_Hospital" />
+          <ScalarProperty Name="Policlinic_Name" ColumnName="Policlinic_Name" />
+          <ScalarProperty Name="Policlinic_Place" ColumnName="Policlinic_Place" />
+          <ScalarProperty Name="Doctor_ID" ColumnName="Doctor_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="HospitalModel.sysdiagram">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

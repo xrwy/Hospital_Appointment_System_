@@ -1,0 +1,208 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="HospitalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Authority">
+    <Key>
+      <PropertyRef Name="Authorized_ID" />
+    </Key>
+    <Property Name="Authorized_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Authorized_Name" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="Authorized_Password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Date">
+    <Key>
+      <PropertyRef Name="Date_ID" />
+    </Key>
+    <Property Name="Date_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Appointment_Date" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Meetings" Relationship="Self.FK_Randevu_Tarih" FromRole="Date" ToRole="Meeting" />
+  </EntityType>
+  <EntityType Name="Doctor">
+    <Key>
+      <PropertyRef Name="Doctor_ID" />
+    </Key>
+    <Property Name="Doctor_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Policlinics" Relationship="Self.FK_Poliklinik_Doktor" FromRole="Doctor" ToRole="Policlinic" />
+    <NavigationProperty Name="Meetings" Relationship="Self.FK_Randevu_Doktor" FromRole="Doctor" ToRole="Meeting" />
+    <Property Name="Doctor_Name" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="Doctor_Lastname" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Hour">
+    <Key>
+      <PropertyRef Name="Hour_ID" />
+    </Key>
+    <Property Name="Hour_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Appointment_Time" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Meetings" Relationship="Self.FK_Randevu_Saat" FromRole="Hour" ToRole="Meeting" />
+  </EntityType>
+  <EntityType Name="Meeting">
+    <Key>
+      <PropertyRef Name="Meeting_ID" />
+    </Key>
+    <Property Name="Meeting_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Policlinic_ID" Type="Int32" />
+    <Property Name="Patient_ID" Type="Int32" />
+    <Property Name="Doctor_ID" Type="Int32" />
+    <Property Name="Hour_ID" Type="Int32" />
+    <Property Name="Date_ID" Type="Int32" />
+    <NavigationProperty Name="Date" Relationship="Self.FK_Randevu_Tarih" FromRole="Meeting" ToRole="Date" />
+    <NavigationProperty Name="Doctor" Relationship="Self.FK_Randevu_Doktor" FromRole="Meeting" ToRole="Doctor" />
+    <NavigationProperty Name="Hour" Relationship="Self.FK_Randevu_Saat" FromRole="Meeting" ToRole="Hour" />
+    <NavigationProperty Name="Patient" Relationship="Self.FK_Randevu_Hasta" FromRole="Meeting" ToRole="Patient" />
+    <NavigationProperty Name="Policlinic" Relationship="Self.FK_Randevu_Poliklinik" FromRole="Meeting" ToRole="Policlinic" />
+  </EntityType>
+  <EntityType Name="Member">
+    <Key>
+      <PropertyRef Name="Member_No" />
+    </Key>
+    <Property Name="Member_No" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Member_Identity" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+    <Property Name="Member_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Member_Lastname" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Member_Gender" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="Member_Date_of_birth" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Member_Password" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Patient">
+    <Key>
+      <PropertyRef Name="Patient_ID" />
+    </Key>
+    <Property Name="Patient_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Patient_Identity" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+    <Property Name="Patient_Name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="Patient_Lastname" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="Patient_Date_of_birth" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="Patient_Gender" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Meetings" Relationship="Self.FK_Randevu_Hasta" FromRole="Patient" ToRole="Meeting" />
+  </EntityType>
+  <EntityType Name="Policlinic">
+    <Key>
+      <PropertyRef Name="Policlinic_ID" />
+    </Key>
+    <Property Name="Policlinic_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Policlinic_City" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+    <Property Name="Policlinic_District" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Policlinic_Hospital" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Policlinic_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Policlinic_Place" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Doctor_ID" Type="Int32" />
+    <NavigationProperty Name="Doctor" Relationship="Self.FK_Poliklinik_Doktor" FromRole="Policlinic" ToRole="Doctor" />
+    <NavigationProperty Name="Meetings" Relationship="Self.FK_Randevu_Poliklinik" FromRole="Policlinic" ToRole="Meeting" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <Association Name="FK_Randevu_Tarih">
+    <End Role="Date" Type="Self.Date" Multiplicity="0..1" />
+    <End Role="Meeting" Type="Self.Meeting" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Date">
+        <PropertyRef Name="Date_ID" />
+      </Principal>
+      <Dependent Role="Meeting">
+        <PropertyRef Name="Date_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Poliklinik_Doktor">
+    <End Role="Doctor" Type="Self.Doctor" Multiplicity="0..1" />
+    <End Role="Policlinic" Type="Self.Policlinic" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Doctor">
+        <PropertyRef Name="Doctor_ID" />
+      </Principal>
+      <Dependent Role="Policlinic">
+        <PropertyRef Name="Doctor_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Randevu_Doktor">
+    <End Role="Doctor" Type="Self.Doctor" Multiplicity="0..1" />
+    <End Role="Meeting" Type="Self.Meeting" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Doctor">
+        <PropertyRef Name="Doctor_ID" />
+      </Principal>
+      <Dependent Role="Meeting">
+        <PropertyRef Name="Doctor_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Randevu_Saat">
+    <End Role="Hour" Type="Self.Hour" Multiplicity="0..1" />
+    <End Role="Meeting" Type="Self.Meeting" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Hour">
+        <PropertyRef Name="Hour_ID" />
+      </Principal>
+      <Dependent Role="Meeting">
+        <PropertyRef Name="Hour_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Randevu_Hasta">
+    <End Role="Patient" Type="Self.Patient" Multiplicity="0..1" />
+    <End Role="Meeting" Type="Self.Meeting" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Patient">
+        <PropertyRef Name="Patient_ID" />
+      </Principal>
+      <Dependent Role="Meeting">
+        <PropertyRef Name="Patient_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Randevu_Poliklinik">
+    <End Role="Policlinic" Type="Self.Policlinic" Multiplicity="0..1" />
+    <End Role="Meeting" Type="Self.Meeting" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Policlinic">
+        <PropertyRef Name="Policlinic_ID" />
+      </Principal>
+      <Dependent Role="Meeting">
+        <PropertyRef Name="Policlinic_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="HospitalEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Authorities" EntityType="Self.Authority" />
+    <EntitySet Name="Dates" EntityType="Self.Date" />
+    <EntitySet Name="Doctors" EntityType="Self.Doctor" />
+    <EntitySet Name="Hours" EntityType="Self.Hour" />
+    <EntitySet Name="Meetings" EntityType="Self.Meeting" />
+    <EntitySet Name="Members" EntityType="Self.Member" />
+    <EntitySet Name="Patients" EntityType="Self.Patient" />
+    <EntitySet Name="Policlinics" EntityType="Self.Policlinic" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <AssociationSet Name="FK_Randevu_Tarih" Association="Self.FK_Randevu_Tarih">
+      <End Role="Date" EntitySet="Dates" />
+      <End Role="Meeting" EntitySet="Meetings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Poliklinik_Doktor" Association="Self.FK_Poliklinik_Doktor">
+      <End Role="Doctor" EntitySet="Doctors" />
+      <End Role="Policlinic" EntitySet="Policlinics" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Randevu_Doktor" Association="Self.FK_Randevu_Doktor">
+      <End Role="Doctor" EntitySet="Doctors" />
+      <End Role="Meeting" EntitySet="Meetings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Randevu_Saat" Association="Self.FK_Randevu_Saat">
+      <End Role="Hour" EntitySet="Hours" />
+      <End Role="Meeting" EntitySet="Meetings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Randevu_Hasta" Association="Self.FK_Randevu_Hasta">
+      <End Role="Patient" EntitySet="Patients" />
+      <End Role="Meeting" EntitySet="Meetings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Randevu_Poliklinik" Association="Self.FK_Randevu_Poliklinik">
+      <End Role="Policlinic" EntitySet="Policlinics" />
+      <End Role="Meeting" EntitySet="Meetings" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
